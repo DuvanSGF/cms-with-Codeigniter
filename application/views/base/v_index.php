@@ -32,7 +32,7 @@ foreach($css_files as $file): ?>
       <link href="<?= base_url()?>static/css/animate.css" rel="stylesheet">
       <link href="<?= base_url()?>static/css/style.css" rel="stylesheet">
 
-      <link rel="icon" type="image/png" href="<?php echo base_url()?>assets/uploads/files/<?php echo $favicon_app; ?>" />
+      <link rel="icon" type="image/png" href="<?php echo base_url()?>assets/uploads/files/<?php echo $faviconapp; ?>" />
 </head>
 <body>
 
@@ -48,10 +48,9 @@ foreach($css_files as $file): ?>
              echo '<h1>'.$titulo_pagina.'</h1>';
              echo '<p>'.$titulo_descripcion.'</p>';
              echo $output;
-           }else {
+           }else{
              if(isset($content)){
                $this->load->view("base/".$content);
-
              }else{
                 $this->load->view("base/v_content");
              }

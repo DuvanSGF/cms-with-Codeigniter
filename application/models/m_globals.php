@@ -10,6 +10,7 @@ Class m_globals extends CI_Model
    var $conf_descripcionapp;
    var $conf_right;
    var $conf_icono;
+   var $conf_favicon;
 
   function procesa_registro($tabla, $campo, $valor,$campo_retorna_1)
   {

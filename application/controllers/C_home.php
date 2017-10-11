@@ -15,6 +15,7 @@ function __construct()
 /* ------------------ */
 
 $this->load->library('grocery_CRUD');
+
 }
 
 public function index()
@@ -25,7 +26,7 @@ public function index()
 			$output->pintacrud="no";
     	$this->_cms_output($output);
     }else {
-      redirect('c_login', 'refresh');
+      redirect('C_login', 'refresh');
     }
 	}
 
@@ -39,18 +40,22 @@ public function cms_tabla($tabla)
 					$crud->set_table($tabla);
 					if ($tabla == 'cms_user'){
 						$crud->set_relation('id_rol','cms_rol','nombre');
+						$crud->set_field_upload('foto','assets/uploads/files');
 					}elseif ($tabla == 'cms_permisos') {
 						$crud->set_relation('id_rol','cms_rol','nombre');
 						$crud->set_relation('id_menu','cms_menu','name_menu');
+					}elseif ($tabla == 'cms_configuracion'){
+
+						$crud->set_field_upload('favicon','assets/uploads/files');
 					}
 					$output = $crud->render();
 					$this->m_globals->get_seccion($tabla);
-					$output->titulo_pagina      =$this->m_globals->conf_titulo;
+					$output->titulo_pagina =$this->m_globals->conf_titulo;
 					$output->titulo_descripcion =$this->m_globals->conf_descripcion;
 					$output->pintacrud="si";
 					$this->_cms_output($output);
 
-				  }else{
+				}else{
 					$output = new stdClass();
 					$output->pintacrud="no";
 					$output->content="v_errorperimisos";
@@ -58,7 +63,7 @@ public function cms_tabla($tabla)
 				}
 
 	    }else {
-	      redirect('c_login', 'refresh');
+	      redirect('C_login', 'refresh');
 	    }
 		}
 
@@ -73,39 +78,40 @@ public function pinta_menux()
 				$output->pintacrud="si";
 	    	$this->_cms_output($output);
 	   }else{
-	      redirect('c_login', 'refresh');
+	      redirect('C_login', 'refresh');
 	    }
 }
 
 
-function logout()
-{
+function logout(){
+
 	$this->session->unset_userdata('logged_in');
-	session_destroy();
-	redirect('C_home', 'refresh');
+		session_destroy();
+		redirect('C_home', 'refresh');
+
 }
+
 
 function _cms_output($output = null)
 {
 /*datos de session de usuario*/
-	$session_data         	  =   $this->session->userdata('logged_in');
-	$output->user_name  	    =   $session_data['ses_user_name'];
-	$output->user_rol  		    =   $session_data['ses_user_rol'];
-	$output->user_photo 	    =   $session_data['ses_user_foto'];
-	$output->user_rol_name 	  =   $session_data['ses_user_rol_name'];
-	$resultmenu               =   $this->m_menu->menu_permisos($output->user_rol);
-	$output->array_menu       =   array('opc_menu'=> $resultmenu);
-
-/*Datos de las variables Globales de la Tabla configuracion*/
+	$session_data         	=   $this->session->userdata('logged_in');
+	$output->user_name  	  =   $session_data['ses_user_name'];
+	$output->user_rol  		  =   $session_data['ses_user_rol'];
+	$output->user_photo 	  =   $session_data['ses_user_foto'];
+	$output->user_rol_name 	=   $session_data['ses_user_rol_name'];
+	$resultmenu             =   $this->m_menu->menu_permisos($output->user_rol);
+	$output->array_menu     =   array('opc_menu'=> $resultmenu);
 	$this->m_globals->get_configuration();
-	$output->titulo_empresa         =$this->m_globals->conf_bussines;
-	$output->titulo_dev             =$this->m_globals->conf_dev;
-	$output->titulo_email           =$this->m_globals->conf_email;
-	$output->titulo_descripcionapp  =$this->m_globals->conf_descripcionapp;
-	$output->titulo_derechos        =$this->m_globals->conf_right;
-	$output->titulo_icono           =$this->m_globals->conf_icono;
-  $output->titulo_nombreapp       =$this->m_globals->conf_aplication;
-  $output->favicon_app            =$this->m_globals->conf_favicon;
+	$output->titulo_empresa =$this->m_globals->conf_bussines;
+	$output->titulo_dev =$this->m_globals->conf_dev;
+	$output->titulo_email =$this->m_globals->conf_email;
+	$output->titulo_descripcionapp =$this->m_globals->conf_descripcionapp;
+	$output->titulo_derechos =$this->m_globals->conf_right;
+	$output->titulo_icono =$this->m_globals->conf_icono;
+  $output->titulo_nombreapp =$this->m_globals->conf_aplication;
+	$output->faviconapp =$this->m_globals->conf_favicon;
+
 	$this->load->view('/base/v_index.php',$output);
 }
 }

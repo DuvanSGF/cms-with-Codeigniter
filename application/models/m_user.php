@@ -44,6 +44,8 @@ function getrol($id_rol)
 function getpermisos($tabla)
 {
   $session_data  =   $this->session->userdata('logged_in');
+  if( $session_data['ses_user_rol'] ==1) return true;// validamos que el super admin siempre tiene  todos los permisos
+  
   $this->db->select('*');
   $this->db->from('cms_permisos cp');
   $this->db->join('cms_menu cm', 'cm.id_menu = cp.id_menu');
