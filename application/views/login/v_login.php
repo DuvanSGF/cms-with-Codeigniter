@@ -49,7 +49,7 @@
                         <p class="text-muted text-center">
                             <small>No tengo una cuenta?</small>
                         </p>
-                        <a class="btn btn-sm btn-white btn-block" href="register.html">Crear una cuenta</a>
+                        <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url() ?>C_register">Crear una cuenta</a>  
                         <?
                                    if(validation_errors()){
                                    ?>
