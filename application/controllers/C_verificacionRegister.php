@@ -13,10 +13,10 @@ class c_verificacionRegister extends CI_Controller {
   {
     $this->load->library('form_validation');
 
-    $this->form_validation->set_rules('name_user', 'User', 'trim|required');
-    $this->form_validation->set_rules('email_user', 'Email', 'trim|required');
+    $this->form_validation->set_rules('name_user', 'User', 'trim|required|is_unique[cms_user.user]');
+    $this->form_validation->set_rules('email_user', 'Email', 'trim|required|is_unique[cms_user.email]');
     $this->form_validation->set_rules('password_user', 'Password', 'trim|required|min_length[5]');
-
+    $this->form_validation->set_message('is_unique', 'El %s ya está existe.');
     // Si la validacion del formulario es TRUE
     if($this->form_validation->run() == TRUE)
     {
@@ -34,5 +34,12 @@ class c_verificacionRegister extends CI_Controller {
     }else {
       $this->load->view('register/v_register');
     }
+  }
+
+  public function is_unique($str, $field)
+  {
+    list($table, $field)=explode('.', $field);
+    $query = $this->CI->db->limit(1)->get_where($table, array($field => $str));
+    return $query->num_rows() === 0;
   }
 }

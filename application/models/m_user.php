@@ -77,5 +77,24 @@ function register($user, $email, $password)
     return $insert_id;
 }
 
+function validaruser($user, $email) {
+   $this->db->select('*');
+   $this->db->from('cms_user');
+   $this->db->where('user', $user);
+   $this->db->or_where('email', $email);
+   $this->db->limit(1);
+
+   $query = $this->db->get();
+
+   if($query->num_rows() == 1)
+   {
+     return $query->result();
+   }
+   else
+   {
+     return false;
+   }
+ }
+
 }
 ?>
