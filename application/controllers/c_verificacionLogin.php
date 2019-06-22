@@ -19,8 +19,18 @@ class c_verificacionLogin extends CI_Controller {
 
     if($this->form_validation->run() == FALSE)
     {
-      //Field validation failed.&nbsp; User redirected to login page
-      $this->load->view('login/v_login');
+          $output= new stdClass();
+          $this->m_globals->get_configuration();
+          $output->titulo_empresa =$this->m_globals->conf_bussines;
+          $output->titulo_nombreapp =$this->m_globals->conf_aplication;
+          $output->titulo_dev =$this->m_globals->conf_dev;
+          $output->titulo_email =$this->m_globals->conf_email;
+          $output->titulo_descripcion =$this->m_globals->conf_descripcionapp;
+          $output->titulo_derechos =$this->m_globals->conf_right;
+          $output->titulo_icono =$this->m_globals->conf_icono;
+          $output->faviconapp =$this->m_globals->conf_favicon;
+          $this->load->helper(array('form'));
+          $this->load->view("/login/V_login", $output);
     }
     else
     {
@@ -59,7 +69,7 @@ class c_verificacionLogin extends CI_Controller {
    }
    else
    {
-     $this->form_validation->set_message('check_database', 'Invalid username or password');
+     $this->form_validation->set_message('check_database', 'Usuario o contraseña invalidos');
      return false;
    }
  }

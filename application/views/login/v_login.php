@@ -31,8 +31,15 @@
                 <div class="ibox-content">
                   <?php
                         $attributes = array('id' => 'login-form');
-                        echo form_open('c_verificacionLogin', $attributes); //se define el formulario
+                        echo form_open('C_verificacionLogin', $attributes); //se define el formulario
                    ?>
+                   <?
+                      if(validation_errors()){
+                      ?>
+                          <br/><div class="error-box round"><?php echo validation_errors(); ?></div>
+                          <?
+                              }
+                                ?>
                         <div class="form-group">
                             <input type="text" class="form-control" id="frm_user" name="frm_user" placeholder="Usuario" required="">
                         </div>
@@ -42,21 +49,15 @@
 
                         <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
 
-                        <a href="#">
+                        <a href="<?php echo base_url() ?>C_login/ForgotPassword">
                             <small>olvide mi contraseña?</small>
                         </a>
 
                         <p class="text-muted text-center">
                             <small>No tengo una cuenta?</small>
                         </p>
-                        <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url() ?>C_register">Crear una cuenta</a>  
-                        <?
-                                   if(validation_errors()){
-                                   ?>
-                                   <br/><div class="error-box round"><?php echo validation_errors(); ?></div>
-                                   <?
-                                   }
-                                   ?>
+                        <a class="btn btn-sm btn-white btn-block" href="<?php echo base_url() ?>C_register">Crear una cuenta</a>
+
                     </form>
                     <p class="m-t">
                         <small><?=$titulo_dev;?> </small>

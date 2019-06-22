@@ -22,13 +22,13 @@ public function index()
 {
 	if($this->session->userdata('logged_in'))
 		{
-			$output= new stdClass();
+			$output = new stdClass();
 			$output->pintacrud="no";
     	$this->_cms_output($output);
     }else {
       redirect('C_login', 'refresh');
     }
-	}
+}
 
 public function cms_tabla($tabla)
 	{
@@ -41,12 +41,22 @@ public function cms_tabla($tabla)
 					if ($tabla == 'cms_user'){
 						$crud->set_relation('id_rol','cms_rol','nombre');
 						$crud->set_field_upload('foto','assets/uploads/files');
-					}elseif ($tabla == 'cms_permisos') {
+						//validamos el campo email en el grocery_CRUD
+						$crud->set_rules('email','email','valid_email');
+						//validamos el campo user en el grocery_CRUD
+						$crud->set_rules('user','user','alpha');
+
+					}elseif ($tabla == 'cms_permisos'){
 						$crud->set_relation('id_rol','cms_rol','nombre');
 						$crud->set_relation('id_menu','cms_menu','name_menu');
 					}elseif ($tabla == 'cms_configuracion'){
-
-						$crud->set_field_upload('favicon','assets/uploads/files');
+						$crud->set_field_upload('favicon_aplication','assets/uploads/files');
+					}elseif ($tabla == 'cms_menu') {
+						$crud->set_relation('id_menu','cms_menu','name_menu');
+						//$crud->set_relation('name_menu','cms_menu','id_menu');
+					}elseif ($tabla == 'cms_despachos') {
+						$crud->set_relation('id_rol','cms_despachos','id_despachos');
+						$crud->set_relation('id_rol','cms_rol','nombre');
 					}
 					$output = $crud->render();
 					$this->m_globals->get_seccion($tabla);

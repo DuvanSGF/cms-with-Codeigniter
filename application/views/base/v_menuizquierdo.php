@@ -3,20 +3,16 @@
 
         <ul class="nav metismenu" id="side-menu">
             <li class="nav-header">
-
-
-
-
                 <div class="dropdown profile-element">
 
-      <h3><a href="index.html" class="site_title"><i class="<?=$titulo_icono;?>"></i> <span><?=$titulo_nombreapp;?></span></a></h3>
+      <h3><a href="<?=base_url()?>C_home" class="site_title"><i class="<?=$titulo_icono?>"></i> <span><?=$titulo_nombreapp;?></span></a></h3>
 
-      <span><img alt="image" class="img-circle" src="<?=base_url();?>assets/uploads/files/<?=$user_photo;?>" width="48" height="48" /></span>
+      <span><img alt="image" class="img-circle" src="<?=base_url();?>assets/uploads/files/<?=$user_photo?>" width="48" height="48" /></span>
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold"><?=$user_name?></strong>
                         </span> <span class="text-muted text-xs block"><?=$user_rol_name ?><b class="caret"></b></span> </span> </a>
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="#">Perfil</a></li>
+                        <li><a href="<?php echo base_url();?>c_home/cms_user">Perfil</a></li>
 <?php
   if ($user_rol == 1){
     echo '    <li><a href="'.base_url().'c_home/cms_tabla/cms_user">Usuarios</a></li>
